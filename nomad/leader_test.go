@@ -138,7 +138,9 @@ func TestLeader_MultiBootstrap(t *testing.T) {
 	s1, cleanupS1 := TestServer(t, nil)
 	defer cleanupS1()
 
-	s2, cleanupS2 := TestServer(t, nil)
+	s2, cleanupS2 := TestServer(t, func(c *Config) {
+		c.DevDisableBootstrap = true
+	})
 	defer cleanupS2()
 	servers := []*Server{s1, s2}
 	TestJoin(t, s1, s2)
